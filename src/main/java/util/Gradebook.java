@@ -5,12 +5,20 @@
  */
 package util;
 
+import java.sql.Array;
 import java.util.*;
 
 public class Gradebook {
     private ArrayList<Student> listOfStudents;
 
     // Constructor
+    public Gradebook() {
+        listOfStudents = new ArrayList<Student>();
+    }
+
+    public void addStudent(Student student) {
+        listOfStudents.add(student);
+    }
 
     public double calculateAvg() {
         double sum = 0;
@@ -32,5 +40,46 @@ public class Gradebook {
     public void printAllStudents() {
         for(Student s: listOfStudents)
             System.out.printf("%s\t%s\t%d\t%d\n", s.getFirstName(), s.getLastName(), s.getPid(), s.getGrade().getScore());
+    }
+
+    public void printAllStudentLetterGrades() {
+        for(Student s: listOfStudents)
+            System.out.printf("%s\t%s\t%d\t%d\n", s.getFirstName(), s.getLastName(), s.getPid(), s.getGrade().getLetterGrade());
+    }
+
+    public Grade getMinimumGrade() {
+        Grade minimumGrade = new Grade(100);
+
+        for(Student s : listOfStudents) {
+            if(s.getGrade().getScore() < minimumGrade.getScore()) {
+                minimumGrade = s.getGrade();
+            }
+        }
+
+        return minimumGrade;
+    }
+
+    public Grade getMaximumGrade() {
+        Grade maximumGrade = new Grade(0);
+
+        for(Student s : listOfStudents) {
+            if(s.getGrade().getScore() < maximumGrade.getScore()) {
+                maximumGrade = s.getGrade();
+            }
+        }
+
+        return maximumGrade;
+    }
+
+    public Student getStudent(int pid) {
+        Student student = null;
+        for(Student s : listOfStudents) {
+            if(s.getPid() == pid) {
+                student = s;
+                break;
+            }
+        }
+
+        return student;
     }
 }

@@ -21,9 +21,58 @@ public class Grade {
     private int score;
     private String letterGrade;
 
+    public static Boolean gradeIsValid(String score) {
+        Boolean validGrade = true;
+
+        // Verify Grade does not start with a 0
+        if(score.charAt(0) == '0')
+            validGrade = false;
+
+        // Verify Grade is greater than 0 and no greater than 100
+        if(Integer.parseInt(score) > 100 || Integer.parseInt(score) < 0)
+            validGrade = false;
+
+        return validGrade;
+    }
+
+    public static Boolean gradeIsValid(int score) {
+        if(score > 100 || score < 0)
+            return false;
+
+        return true;
+    }
+
+    public static String convertScoreToLetter(int score) {
+        String letter = "";
+        if(score > 89)
+            letter = "A";
+        else if(score > 84 && score < 90)
+            letter = "A-";
+        else if(score > 80 && score < 85)
+            letter = "B+";
+        else if(score > 74 && score < 80)
+            letter = "B";
+        else if(score > 69 && score < 75)
+            letter = "B-";
+        else if(score > 64 && score < 70)
+            letter = "C+";
+        else if(score > 59 && score < 65)
+            letter = "C";
+        else if (score > 49 && score < 60)
+            letter = "D";
+        else
+            letter = "F";
+
+        return letter;
+    }
 
     // Constructor
-
+    public Grade(int score) {
+        if(gradeIsValid(score)) {
+            this.score = score;
+            letterGrade = convertScoreToLetter(score);
+        }
+    }
 
     public int getScore() {
         return score;
